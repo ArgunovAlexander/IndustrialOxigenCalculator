@@ -24,4 +24,9 @@ public class CalcOxy {
                                                 double oxygenPurityByVol) {
         return (air*(enrichAirOxyConcByVol-oxygenInAirByVol))/(oxygenPurityByVol-oxygenInAirByVol);
     }
+    public static double calcDissipation (double air, double oxyFlow, double enrichAirOxyConcByVol,
+                                          double FurnaceOxyConcByVol, double oxygenInAirByVol, 
+                                          double oxygenPurityByVol) {
+        return air-oxyFlow/(oxygenPurityByVol-oxygenInAirByVol)/(enrichAirOxyConcByVol-oxygenInAirByVol);
+    }
 }
