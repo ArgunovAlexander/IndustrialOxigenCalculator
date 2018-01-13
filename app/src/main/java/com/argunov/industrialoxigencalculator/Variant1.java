@@ -31,55 +31,16 @@ public class Variant1 extends AppCompatActivity {
             new StepperInputListener((EditText) findViewById(R.id.inputBlastFurnaceAirFlow),5,"%.0f");
         (TextView) findViewById(R.id.decrAirFlow).setOnClickListener(
             new StepperInputListener((EditText) findViewById(R.id.inputBlastFurnaceAirFlow),-5,"%.0f");
-    
-    private void printOxyFlow(double oxygenFlow){
-        String message=format(Locale.US,getString(R.string.oxy_flow)+"%.1f",oxygenFlow);
-        TextView textView=findViewById(R.id.outputData);
-        textView.setText(message);
-    }
-
-    private double getOxyConc() {
-        hideKeyboard();
-        EditText oxyConc = findViewById(R.id.inputEnrichAirOxyConc);
-        return isEmpty(oxyConc) ? 0 :Double.valueOf(oxyConc.getText().toString()) ;
-    }
-
-    private double getAirFlow() {
-        EditText FurnaceAirFlow=findViewById(R.id.inputBlastFurnaceAirFlow);
-        return isEmpty(FurnaceAirFlow)? 0 :Double.valueOf(FurnaceAirFlow.getText().toString());
-    }
-
-    private boolean isEmpty(EditText etText) {
-        if (etText.getText().toString().trim().length() > 0) {
-            return false;
-        } else {
-            dispToast();
-            return true;
-        }
-    }
-
-    private void hideKeyboard() {
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }
-
-    private void dispToast() {
-        Toast.makeText(this, getString(R.string.message), Toast.LENGTH_LONG ).show();
-    }
-
-         
-     public void onCalcOxyFlow(View view) {
-        double air=getAirFlow();
-        double oxyConc=getOxyConc();
-        double oxyPur=getIntent().getDoubleExtra("oxyPur",99.5);
-        double oxyInAir=getIntent().getDoubleExtra("oxyInAir",20.7);
-        double oxyFlow=CalcOxy.calculateOxygenFlow(air,oxyConc,oxyInAir,oxyPur);
-        printOxyFlow(oxyFlow);
-    }
-
+     }      
+     
+       (TextView) findViewByID(R.id.onCalcOxyFlow).setOnClickListener(new OnClickListener() {
+            @override    
+           public void onClick(View view){
+               Oxygen o=new Oxygen();
+               o.printParam((TextView) findViewById(R.id.), "Расход кислорода = %.1f",o.calcOxyFlow());
+              }
+       });  
+      
  class StepperInputListener implements OnClickListener {
     StepperInputListener (EditText editText, double step, String format) {}
     @override
@@ -94,4 +55,3 @@ public class Variant1 extends AppCompatActivity {
     }
     }
 }
-
