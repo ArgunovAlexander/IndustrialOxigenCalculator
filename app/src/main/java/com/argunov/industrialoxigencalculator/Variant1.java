@@ -23,52 +23,15 @@ public class Variant1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_variant1);
-
-        TextView incrOxyPercent=findViewById(R.id.incrOxyPer);
-        incrOxyPercent.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                increment((EditText) findViewById(R.id.inputEnrichAirOxyConc),0.1d,"%.1f");
-            }
-        });
-
-
-        TextView decrOxyPercent=findViewById(R.id.decrOxyPer);
-        decrOxyPercent.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                increment((EditText) findViewById(R.id.inputEnrichAirOxyConc),-0.1d,"%.1f");
-            }
-        });
-
-
-        TextView incrAirFlow=findViewById(R.id.incrAirFlow);
-        incrAirFlow.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                increment((EditText) findViewById(R.id.inputBlastFurnaceAirFlow),5,"%.0f");
-            }
-        });
-
-
-        TextView decrAirFlow=findViewById(R.id.decrAirFlow);
-        decrAirFlow.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                increment((EditText) findViewById(R.id.inputBlastFurnaceAirFlow),-5,"%.0f");
-            }
-        });
-    }
-
-    public void onCalcOxyFlow(View view) {
-        double air=getAirFlow();
-        double oxyConc=getOxyConc();
-        double oxyPur=getIntent().getDoubleExtra("oxyPur",99.5);
-        double oxyInAir=getIntent().getDoubleExtra("oxyInAir",20.7);
-        double oxyFlow=CalcOxy.calculateOxygenFlow(air,oxyConc,oxyInAir,oxyPur);
-        printOxyFlow(oxyFlow);
-    }
-
+        (TextView) findViewById(R.id.incrOxyPer).setOnClickListener(
+            new StepperInputListener((EditText) findViewById(R.id.inputEnrichAirOxyConc),0.1d,"%.1f");
+        (TextView) findViewById(R.id.decrOxyPer).setOnClickListener(
+            new StepperInputListener((EditText) findViewById(R.id.inputEnrichAirOxyConc),-0.1d,"%.1f");
+        (TextView) findViewById(R.id.incrAirFlow).setOnClickListener(
+            new StepperInputListener((EditText) findViewById(R.id.inputBlastFurnaceAirFlow),5,"%.0f");
+        (TextView) findViewById(R.id.decrAirFlow).setOnClickListener(
+            new StepperInputListener((EditText) findViewById(R.id.inputBlastFurnaceAirFlow),-5,"%.0f");
+    
     private void printOxyFlow(double oxygenFlow){
         String message=format(Locale.US,getString(R.string.oxy_flow)+"%.1f",oxygenFlow);
         TextView textView=findViewById(R.id.outputData);
@@ -107,11 +70,28 @@ public class Variant1 extends AppCompatActivity {
         Toast.makeText(this, getString(R.string.message), Toast.LENGTH_LONG ).show();
     }
 
-    private void increment(EditText editText, double step, String format) {
-        hideKeyboard();
+         
+     public void onCalcOxyFlow(View view) {
+        double air=getAirFlow();
+        double oxyConc=getOxyConc();
+        double oxyPur=getIntent().getDoubleExtra("oxyPur",99.5);
+        double oxyInAir=getIntent().getDoubleExtra("oxyInAir",20.7);
+        double oxyFlow=CalcOxy.calculateOxygenFlow(air,oxyConc,oxyInAir,oxyPur);
+        printOxyFlow(oxyFlow);
+    }
+
+ class StepperInputListener implements OnClickListener {
+    StepperInputListener (EditText editText, double step, String format) {}
+    @override
+    public void onClick(View view){
+        incrementView();
+        }
+    private void incrementView() {
+        //hideKeyboard();
         double value=Double.valueOf(editText.getText().toString());
         value+=step;
         editText.setText(format(Locale.US,format,value));
+    }
     }
 }
 
