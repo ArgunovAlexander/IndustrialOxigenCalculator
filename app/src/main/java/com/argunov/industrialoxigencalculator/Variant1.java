@@ -40,7 +40,10 @@ public class Variant1 extends AppCompatActivity {
             public void onClick(View view) {
                 double oxyInAir=getIntent().getDoubleExtra("oxyInAir",20.7);
                 double oxyPurity=getIntent().getDoubleExtra("oxyPur",99.5);
-                Oxygen o = new Oxygen(oxyInAir, oxyPurity,);
+                Oxygen o=new Oxygen.Builder
+                    .oxyPurity(oxyPurity);
+                    .oxyInAir(oxyInAir);
+                    .build();
                 o.printParam(outputData, "Расход кислорода = %.1f", o.calcOxyFlow(inputOxyConc,inputAirFlow ));
             }
         });
