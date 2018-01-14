@@ -11,7 +11,7 @@ import android.view.View;
 import static java.lang.String.format;
 
 
-class Oxygen {
+public class Oxygen {
     //double oxyInAir=getIntent().getDoubleExtra("oxyInAir",20.7);
     //double oxyPurity=getIntent().getDoubleExtra("oxyPur",99.5);
     private double oxyConc;
@@ -20,22 +20,37 @@ class Oxygen {
     private double oxyPurity;
     private double airFlow;
     private double furnaceOxyConc;
-    Oxygen() {
-        this.airFlow=0;
-        this.oxyConc=0;
-        this.oxyFlow=0;
-        this.oxyInAir=0;
-        this.oxyPurity=0;
-        this.furnaceOxyConc=0;
+    
+    public static class Builder{
+        private double oxyConc=0;    
+        private double oxyFlow=0;    
+        private double oxyInAir=0;    
+        private double oxyPurity=0;    
+        private double airFlow=0;    
+        private double furnaceOxyConc=0;
+        public Oxygen.Builder oxyConc(double oxyConc) {
+            this.oxyConc=oxyConc;
+            return this;
+        }
+        public Oxygen.Builder oxyFlow(double oxyFlow) {
+            this.oxyFlow=oxyFlow;
+            return this;
+        }
+        public Oxygenr build() {
+            return new Oxygen(this);
+        }
     }
-    Oxygen(double oxyConc,double oxyFlow,double oxyInAir, double oxyPurity,
-           double airFlow, double furnaceOxyConc){
-        this.airFlow=airFlow;
-        this.oxyConc=oxyConc;
-        this.oxyFlow=oxyFlow;
-        this.oxyInAir=oxyInAir;
-        this.oxyPurity=oxyPurity;
-        this.furnaceOxyConc=furnaceOxyConc;
+    
+    private Oxygen() {
+        super();
+    }
+    private Oxygen(Oxygen.Builder builder){
+        airFlow=builder.airFlow;
+        oxyConc=builder.oxyConc;
+        oxyFlow=builder.oxyFlow;
+        oxyInAir=builder.oxyInAir;
+        oxyPurity=builder.oxyPurity;
+        furnaceOxyConc=builder.furnaceOxyConc;
     }
 
     double calcOxyFlow(EditText oxyConcEtTxt, EditText airFlowEtTxt) {
