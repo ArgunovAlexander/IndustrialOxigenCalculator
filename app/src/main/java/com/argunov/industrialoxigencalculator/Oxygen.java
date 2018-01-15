@@ -12,8 +12,6 @@ import static java.lang.String.format;
 
 
 public class Oxygen {
-    //double oxyInAir=getIntent().getDoubleExtra("oxyInAir",20.7);
-    //double oxyPurity=getIntent().getDoubleExtra("oxyPur",99.5);
     private double oxyConc;
     private double oxyFlow;
     private double oxyInAir;
@@ -36,7 +34,23 @@ public class Oxygen {
             this.oxyFlow=oxyFlow;
             return this;
         }
-        public Oxygenr build() {
+        public Oxygen.Builder oxyInAir(double oxyInAir) {
+            this.oxyInAir=oxyInAir;
+            return this;
+        }
+        public Oxygen.Builder oxyPurity(double oxyPurity) {
+            this.oxyPurity=oxyPurity;
+            return this;
+        }
+        public Oxygen.Builder airFlow(double airFlow) {
+            this.airFlow=airFlow;
+            return this;
+        }
+        public Oxygen.Builder furnaceOxyConc(double furnaceOxyConc) {
+            this.furnaceOxyConc=furnaceOxyConc;
+            return this;
+        }
+        public Oxygen.Builder build() {
             return new Oxygen(this);
         }
     }
@@ -72,11 +86,11 @@ public class Oxygen {
         return oxyFlow*(oxyPurity-oxyInAir)/(furnaceOxyConc-oxyInAir)-airFlow;
     }
 
-    double setParam(EditText editText) {
+    public static double setParam(EditText editText) {
         return isEmpty(editText) ? 0 :Double.valueOf(editText.getText().toString()) ;
     }
 
-    boolean isEmpty(EditText editText) {
+    public static boolean isEmpty(EditText editText) {
         if (editText.getText().toString().trim().length() > 0) {
             return false;
         } else {
