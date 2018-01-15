@@ -40,16 +40,18 @@ public class Variant1 extends AppCompatActivity {
             public void onClick(View view) {
                 double oxyInAir=getIntent().getDoubleExtra("oxyInAir",20.7);
                 double oxyPurity=getIntent().getDoubleExtra("oxyPur",99.5);
+                double oxyConc=Oxygen.setParam(inputOxyConc);
+                double airFlow=Oxygen.setParam(inputAirFlow);
                 Oxygen o=new Oxygen.Builder
                     .oxyPurity(oxyPurity);
                     .oxyInAir(oxyInAir);
+                    .oxyConc(oxyConc);
+                    .airFlow(airFlow);
                     .build();
-                o.printParam(outputData, "Расход кислорода = %.1f", o.calcOxyFlow(inputOxyConc,inputAirFlow ));
+                o.printParam(outputData, "Расход кислорода = %.1f", o.calcOxyFlow());
             }
         });
     }
-    //Take a look at class below. Don't know how to pass variables from constructor
-    // to private void with no use instance variables
     class StepperInputListener implements OnClickListener {
         EditText editText;
         double step;
