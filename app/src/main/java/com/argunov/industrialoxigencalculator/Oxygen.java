@@ -67,9 +67,9 @@ public class Oxygen {
         furnaceOxyConc=builder.furnaceOxyConc;
     }
 
-    double calcOxyFlow(EditText oxyConcEtTxt, EditText airFlowEtTxt) {
-        oxyConc=setParam(oxyConcEtTxt);
-        airFlow=setParam(airFlowEtTxt);
+    double calcOxyFlow() {
+        //oxyConc=setParam(oxyConcEtTxt);
+        //airFlow=setParam(airFlowEtTxt);
         return (airFlow*(oxyConc-oxyInAir))/(oxyPurity-oxyInAir);
     }
 
